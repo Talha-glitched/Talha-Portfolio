@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { fadeInUp, staggerContainer, viewportOptions } from "@/lib/animations"
 import { Badge } from "@/components/ui/badge"
-
+import CardSwap, { Card } from "@/components/CardSwap"
 const skillCategories = [
   {
     label: "Languages",
@@ -116,55 +116,61 @@ export function Skills() {
           </motion.p>
         </motion.div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOptions}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {skillCategories.map((cat) => (
-            <motion.div
-              key={cat.label}
-              variants={fadeInUp}
-              className="group relative glass-card rounded-2xl p-6 gradient-border hover-lift"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 280, damping: 22 }}
+        <div className="flex justify-center mt-8 w-full md:mt-16 sm:px-10 lg:px-0">
+          <div className="relative w-full max-w-[380px] mx-auto" style={{ height: '500px' }}>
+            <CardSwap
+              width={380}
+              height={440}
+              cardDistance={40}
+              verticalDistance={40}
+              delay={4000}
+              pauseOnHover={true}
+              skewAmount={8}
             >
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `radial-gradient(ellipse 80% 60% at 50% 0%, ${cat.color.replace(")", " / 0.08)")} 0%, transparent 70%)`,
-                }}
-              />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-5">
+              {skillCategories.map((cat) => (
+                <Card
+                  key={cat.label}
+                  className="group relative glass-card rounded-2xl p-6 gradient-border text-left w-full h-full hover-lift cursor-pointer overflow-hidden"
+                  style={{ background: 'oklch(0.1 0.015 240 / 0.95)', border: 'none' }}
+                >
                   <div
-                    className="w-3 h-3 rounded-full animate-pulse-glow"
+                    className="absolute inset-0 rounded-2xl opacity-100 pointer-events-none"
                     style={{
-                      background: cat.color,
-                      boxShadow: `0 0 10px ${cat.color}`,
+                      background: `radial-gradient(ellipse 80% 60% at 50% 0%, ${cat.color.replace(")", " / 0.12)")} 0%, transparent 80%)`,
                     }}
                   />
-                  <Badge
-                    variant="outline"
-                    className="text-xs font-semibold px-3 py-1"
-                    style={{
-                      borderColor: `${cat.color.replace(")", " / 0.4)")}`,
-                      color: cat.color,
-                      background: `${cat.color.replace(")", " / 0.1)")}`,
-                    }}
-                  >
-                    {cat.label}
-                  </Badge>
-                </div>
-                {cat.skills.map((skill) => (
-                  <SkillBar key={skill.name} {...skill} color={cat.color} />
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div
+                        className="w-3 h-3 rounded-full animate-pulse-glow"
+                        style={{
+                          background: cat.color,
+                          boxShadow: `0 0 10px ${cat.color}`,
+                        }}
+                      />
+                      <Badge
+                        variant="outline"
+                        className="text-xs font-semibold px-3 py-1"
+                        style={{
+                          borderColor: `${cat.color.replace(")", " / 0.4)")}`,
+                          color: cat.color,
+                          background: `${cat.color.replace(")", " / 0.15)")}`,
+                        }}
+                      >
+                        {cat.label}
+                      </Badge>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      {cat.skills.map((skill) => (
+                        <SkillBar key={skill.name} {...skill} color={cat.color} />
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </CardSwap>
+          </div>
+        </div>
       </div>
     </section>
   )
