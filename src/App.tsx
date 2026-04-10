@@ -1,5 +1,5 @@
 import { Background } from "@/components/Background"
-import { CursorEffect } from "@/components/CursorEffect"
+import SplashCursor from "@/components/SplashCursor"
 import { Navbar } from "@/components/Navbar"
 import { Hero } from "@/components/sections/Hero"
 import { About } from "@/components/sections/About"
@@ -13,7 +13,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-background">
       <Background />
-      <CursorEffect />
+      <SplashCursor />
       <Navbar />
       <main className="relative z-10">
         <Hero />
